@@ -1,17 +1,15 @@
-$(document).ready(function () {// tells engine to load 1)html & 2)css first.
-    //display current day & time.
-    $("#currentDay").text(moment().format("MMMM Do YYYY, h:mm:ss a")); // use of moment.js
-    //assign saveBtn click listener for user input and time stamp??
+$(document).ready(function () {
+    //show current date at top of scheduler
+    $("#currentDay").text(moment().format("MMMM Do YYYY"));
     $(".saveBtn").on("click", function () {
-        //get nearby values.
         console.log(this);
-        var text = $(this).siblings(".description").val(); // taken the change from the sibling html description attribute
-        var time = $(this).parent().attr("id"); // taken the change from the parent html id attribute
+        var text = $(this).siblings(".description").val(); 
+        var time = $(this).parent().attr("id"); 
 
-        //set items in local storage.
+        //saves any tasks that were input to local storage
         localStorage.setItem(time, text);
     })
-    //load any saved data from LocalStorage - do this for each hour created. Should follow html 24 hour to 12 hour conversion.
+    //retrieves any saved items from local storage
     $("#hour8 .description").val(localStorage.getItem("hour8"));
     $("#hour9 .description").val(localStorage.getItem("hour9"));
     $("#hour10 .description").val(localStorage.getItem("hour10"));
@@ -24,15 +22,13 @@ $(document).ready(function () {// tells engine to load 1)html & 2)css first.
     $("#hour17 .description").val(localStorage.getItem("hour17"));
 
     function hourTracker() {
-        //get current number of hours.
-        var currentHour = moment().hour(); // use of moment.js
+        var currentHour = moment().hour(); 
 
         // loop over time blocks
         $(".time-block").each(function () {
             var blockHour = parseInt($(this).attr("id").split("hour")[1]);
-            console.log( blockHour, currentHour)
-
-            //check if we've moved past this time, click into css/html given classes of past, present, or future
+            
+            //checks to see if time is past, present or future and color codes accordingly in css
             if (blockHour < currentHour) {
                 $(this).addClass("past");
                 $(this).removeClass("future");
@@ -50,5 +46,5 @@ $(document).ready(function () {// tells engine to load 1)html & 2)css first.
             }
         })
     }
-    hourTracker(); //re-run function
+    hourTracker();
 })

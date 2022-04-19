@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    //show current date at top of scheduler
+    //shows current date at top of scheduler
     $("#currentDay").text(moment().format("MMMM Do YYYY"));
     $(".saveBtn").on("click", function () {
         console.log(this);
